@@ -272,7 +272,7 @@ class BackupLocal:
 			print 'Using heuristic to determine incremental size...'
 			# Determine size of last two backups, due to hardlinks 'du' will print
 			# only changed files' size for the latest backup, giving the size of the incremental backup:
-			freeSpace = self._checkFreeSpace( self._mapperDevice )
+			freeSpace = self._localDevice._checkFreeSpace( self._mapperDevice )
 			duOutput = check_output( paths[ 'sudo' ], paths[ 'du' ]
 			                       , '--max-depth=1'
 			                       , os.path.normpath( self._backupLocation + os.sep + backups[ -2 ] )
