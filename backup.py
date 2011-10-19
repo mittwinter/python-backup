@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-# backup.py, version 0.0.9 [2011-09-28]
+# backup.py, version 0.0.10 [2011-09-28]
 # Copyright (C) 2011 Martin Wegner.
 # Released under the terms of "THE BEER-WARE LICENSE" (Revision 42):
 # <mw@mroot.net> wrote this file. As long as you retain this notice you
@@ -28,7 +28,7 @@ else:
 	colors = { 'blue': '', 'yellow': '', 'white': '', 'reset': '' }
 
 def showUsage():
-	print '', colors[ 'blue' ] + '*' + colors[ 'white' ], os.path.basename( sys.argv[ 0 ] ), 'version 0.0.9 [2011-09-28]'
+	print '', colors[ 'blue' ] + '*' + colors[ 'white' ], os.path.basename( sys.argv[ 0 ] ), 'version 0.0.10 [2011-10-18]'
 	print '', colors[ 'blue' ] + '*' + colors[ 'white' ], 'Released unter the terms of "THE BEER-WARE LICENSE", see source for full license text ;-)'
 	print colors[ 'reset' ]
 	targets = [ 'local', 'remote' ]
