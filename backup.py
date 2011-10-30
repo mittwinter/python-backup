@@ -195,7 +195,7 @@ class BackupRemote:
 		local backup device and transfers the (encrypted) encfs source
 		to a configured remote location.
 		"""
-		call( paths[ 'rsync' ], '--delete-before', '-a', '--progress'
+		call( paths[ 'rsync' ], '--delete-before', '--delete-excluded', '-a', '--progress'
 		    , ' '.join( [ '--exclude=' + e for e in self.config[ 'backupExcludes' ] ] )
 		    , ' '.join( self.config[ 'backupTargets' ] )
 		    , self._encfsTarget + os.sep # trailing slash is important for rsync
@@ -300,6 +300,7 @@ class BackupLocal:
 		call( paths[ 'sudo' ], paths[ 'rsync' ]
 		    , ' '.join( [ '--exclude=' + e for e in self.config[ 'backupExcludes' ] ] )
 		    , '--delete-before'
+		    , '--delete-excluded'
 		    , '--progress'
 		    , '-aRx'
 		    , linkOptions
