@@ -318,22 +318,22 @@ class BackupLocal:
 		return sorted( filter( lambda d: re.search( '^[0-9]{4}-[0-9]{2}-[0-9]{2}$', d ) is not None, os.listdir( destination ) ) )
 
 	def _cleanOldBackups( self, requiredSize ):
-		freeSpace = self._checkFreeSpace( self._mapperDevice )
+		freeSpace = self._localDevice._checkFreeSpace( self._mapperDevice )
 		backups = self._listBackups( self._backupLocation )
 		printStatus( 'Not enough space, cleaning old backups...' )
 		while requiredSize > freeSpace and len( backups ) > self.config[ 'keep' ]:
 			printStatus( 'Wiping backup', backups[ 0 ], indent = '\t' )
-			oldBackupPath = os.path.normpath( backupLocation + os.sep + backups[ 0 ] )
+			oldBackupPath = os.path.normpath( self._backupLocation + os.sep + backups[ 0 ] )
 			if self._debug:
 				call( paths[ 'sudo' ], 'echo', paths[ 'rm' ], '-Rf', oldBackupPath )
 			else:
 				call( paths[ 'sudo' ], paths[ 'rm' ], '-Rf', oldBackupPath )
 			# Update variables to current state:
 			backups = self._listBackups( self._backupLocation )
-			freeSpace = self._checkFreeSpace( self._mapperDevice )
+			freeSpace = self._localDevice._checkFreeSpace( self._mapperDevice )
 		# Check if we cleaned all possible backups while keeping config[ 'keep' ] backups,
 		# if there is still not enough space, abort with ExceptionNoSpaceLeft:
-		if len( backups ) == configuration[ 'keep' ] and requiredSize > freeSpace:
+		if len( backups ) == self.config[ 'keep' ] and requiredSize > freeSpace:
 			printStatus( 'Won\'t clean last ' + self.config[ 'keep' ] + ' backup(s)...' )
 			printStatus( 'Not enough space left after cleaning up, please take care of it yourself...' )
 			raise ExceptionNoSpaceLeft( self._mapperDevice )
