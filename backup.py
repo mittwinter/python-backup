@@ -211,7 +211,7 @@ class BackupRemote:
 		Unmounts the encfs used for the remote backup and also the
 		underlying local backup device.
 		"""
-		call( paths[ 'fusermount' ], '-u', self._encfsTarget )
+		call( paths[ 'sudo' ], paths[ 'umount' ], self._encfsTarget )
 		self._localDevice.umount()
 
 class BackupLocal:
