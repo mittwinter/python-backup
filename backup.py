@@ -141,7 +141,7 @@ class LocalCryptDevice:
 				    , self.mountDestination
 				    )
 			else:
-				printStatus( self._mapperDevice, 'is already mounted on', selfmountDestination )
+				printStatus( self._mapperDevice, 'is already mounted on', self.mountDestination )
 		except ExceptionMountReadOnly as e:
 			print e
 			printStatus( 'Remounting read/write...' )
