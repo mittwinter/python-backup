@@ -289,7 +289,11 @@ class BackupLocal:
 				print lastBackupIncrementalSize, '>', freeSpace, '?'
 			# If there is not sufficient space, clean oldest backups:
 			if lastBackupIncrementalSize > freeSpace:
-				backups = self._cleanOldBackups( lastBackupIncrementalSize )
+				try:
+					backups = self._cleanOldBackups( lastBackupIncrementalSize )
+				except ExceptionNoSpaceLeft, e:
+					print '! Exception:', e
+					printStatus( 'Continuing despite possibly too low space, successful backup is not guaranteed!' )
 			# Also, link to latest backup:
 			linkOptions = '--link-dest=' + '..' + os.sep + backups[ -1 ]
 		# By now, there should be enough free space...
@@ -344,8 +348,8 @@ class BackupLocal:
 		# Check if we cleaned all possible backups while keeping config[ 'keep' ] backups,
 		# if there is still not enough space, abort with ExceptionNoSpaceLeft:
 		if len( backups ) == self.config[ 'keep' ] and requiredSize > freeSpace:
-			printStatus( 'Won\'t clean last ' + self.config[ 'keep' ] + ' backup(s)...' )
-			printStatus( 'Not enough space left after cleaning up, please take care of it yourself...' )
+			printStatus( 'Won\'t clean last ' + str( self.config[ 'keep' ] ) + ' backup(s)...', indent = '\t' )
+			printStatus( '(Possibly) Not enough space left after cleaning up, please take care of it yourself...', indent = '\t' )
 			raise ExceptionNoSpaceLeft( self._mapperDevice )
 		else:
 			return backups
