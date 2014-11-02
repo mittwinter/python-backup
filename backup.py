@@ -297,6 +297,11 @@ class BackupLocal:
 		#   ...or we could not determine the size of the new backup...
 		# So, create new backup folder:
 		currentBackupLocation = os.path.normpath( self._backupLocation + os.sep + time.strftime( '%Y-%m-%d' ) ) + os.sep # trailing slash is needed for rsync
+		# Check whether such a folder for today already exists, if so create and use one with time appended:
+		if os.path.exists( currentBackupLocation ):
+			printStatus( 'Backup from today exists in', currentBackupLocation, '.' )
+			currentBackupLocation = os.path.normpath( self._backupLocation + os.sep + time.strftime( '%Y-%m-%d-%H:%M' ) ) + os.sep # trailing slash is needed for rsync
+			printStatus( 'Creating backup in', currentBackupLocation, '.' )
 		call( paths[ 'sudo' ], paths[ 'mkdir' ], '-p', currentBackupLocation )
 		call( paths[ 'sudo' ], paths[ 'chown' ], '700', currentBackupLocation )
 		# Finally call rsync, let's do the backup...
@@ -320,7 +325,7 @@ class BackupLocal:
 		self._localDevice.umount()
 
 	def _listBackups( self, destination ):
-		return sorted( filter( lambda d: re.search( '^[0-9]{4}-[0-9]{2}-[0-9]{2}$', d ) is not None, os.listdir( destination ) ) )
+		return sorted( filter( lambda d: re.search( '^[0-9]{4}-[0-9]{2}-[0-9]{2}(-[0-9]{2}:[0-9]{2})?$', d ) is not None, os.listdir( destination ) ) )
 
 	def _cleanOldBackups( self, requiredSize ):
 		freeSpace = self._localDevice._checkFreeSpace( self._mapperDevice )
