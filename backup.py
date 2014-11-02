@@ -11,6 +11,8 @@
 # TODO: Convert to python3!
 # TODO: Handle (possibly) being out of backup space more gracefully,
 #       e. g. offer the user a choice to continue or remove selected backups
+# TODO: (Possibly) Drop --delete-before and --delete-excluded from rsync flags
+#       as they might not be needed anymore (would only be if we would "refresh" a backup?).
 
 import os         # path and filesystem reading/manipulation
 import re         # Expressions. Regular Style!
