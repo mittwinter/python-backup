@@ -250,6 +250,8 @@ class BackupLocal:
 		Mounts a local device via dm-crypt as backup destination.
 		"""
 		self._localDevice.mount()
+		if '/boot' in self.config[ 'backupTargets' ]:
+			call( paths[ 'sudo' ], paths[ 'mount' ], '/boot' )
 
 	def backup( self ):
 		"""
@@ -313,6 +315,8 @@ class BackupLocal:
 		"""
 		Umounts the local backup device.
 		"""
+		if '/boot' in self.config[ 'backupTargets' ]:
+			call( paths[ 'sudo' ], paths[ 'umount' ], '/boot' )
 		self._localDevice.umount()
 
 	def _listBackups( self, destination ):
