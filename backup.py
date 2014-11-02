@@ -8,7 +8,9 @@
 # can do whatever you want with this stuff. If we meet some day, and you think
 # this stuff is worth it, you can buy me a beer in return.
 
-# TODO: Refresh today's backup
+# TODO: Convert to python3!
+# TODO: Handle (possibly) being out of backup space more gracefully,
+#       e. g. offer the user a choice to continue or remove selected backups
 
 import os         # path and filesystem reading/manipulation
 import re         # Expressions. Regular Style!
