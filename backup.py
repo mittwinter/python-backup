@@ -271,7 +271,7 @@ class BackupLocal:
 		# * more than one backup found, thus incremental backup linking to newest old backup
 		# *   with possible wiping of old backups if not enough space:
 		else:
-			printStatus( 'Incremental backup from ' + backups[ -1 ] )
+			printStatus( 'Incremental backup based on ' + backups[ -1 ] )
 			print 'Using heuristic to determine incremental size...'
 			# Determine size of last two backups, due to hardlinks 'du' will print
 			# only changed files' size for the latest backup, giving the size of the incremental backup:
@@ -299,7 +299,7 @@ class BackupLocal:
 		currentBackupLocation = os.path.normpath( self._backupLocation + os.sep + time.strftime( '%Y-%m-%d' ) ) + os.sep # trailing slash is needed for rsync
 		call( paths[ 'sudo' ], paths[ 'mkdir' ], '-p', currentBackupLocation )
 		call( paths[ 'sudo' ], paths[ 'chown' ], '700', currentBackupLocation )
-		# Finally call rsync, let's do the backup ... uh-uh, let's do it ...
+		# Finally call rsync, let's do the backup...
 		call( paths[ 'sudo' ], paths[ 'rsync' ]
 		    , ' '.join( [ '--exclude=' + e for e in self.config[ 'backupExcludes' ] ] )
 		    , '--delete-before'
