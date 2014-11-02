@@ -229,6 +229,7 @@ class BackupLocal:
 	         , 'backupExcludes':    [ '/dev'
 	                                , '/lost+found'
 	                                , '/proc'
+	                                , '/run'
 	                                , '/sys'
 	                                , '/tmp'
 	                                , '.gvfs'
